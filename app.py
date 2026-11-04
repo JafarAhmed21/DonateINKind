@@ -5,7 +5,10 @@ from werkzeug.utils import secure_filename
 
 # ---------------- APP SETUP ----------------
 app = Flask(__name__)
-app.secret_key = "donateinkind_secret_key"
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+
+if not app.config["SECRET_KEY"]:
+    raise RuntimeError("SECRET_KEY environment variable is not set")
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
